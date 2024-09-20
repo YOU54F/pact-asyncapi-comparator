@@ -1,0 +1,22 @@
+name: test
+
+on:
+  push:
+
+jobs:
+    build:
+      runs-on: ubuntu-latest
+
+      steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: npm i
+
+      - name: Run v2_http
+        run: make v2_http || echo "expected failure"
+      - name: Run v3_kafka
+        run: make v3_kafka || echo "expected failure"
+      - name: Run v3_sns
+        run: make v3_sns
