@@ -1,0 +1,61 @@
+asyncapi: 3.0.0
+info:
+  title: Product Events
+  version: 1.0.0
+  description: Kafka message example
+defaultContentType: application/json
+channels:
+  Products:
+    bindings:
+      kafka:
+        clientId: ProductEvent
+    topic: ProductUpdated
+    messages:
+      productUpdated.message:
+        $ref: '#/components/messages/productMessage'
+operations:
+  productEvent:
+    action: send
+    channel:
+      $ref: '#/channels/Products'
+    description: Event triggered when a product is updated in the system
+    tags:
+      - name: KAFKA
+    messages:
+      - $ref: '#/channels/Products/messages/productUpdated.message'
+components:
+  messages:
+    productMessage:
+      name: productMessage
+      title: Notify subscribers when product details are updated
+      summary: 'When any information changes with a product, notify subscribers'
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/productKafkaMessage'
+      examples:
+        - payload:
+            id: 83425-odfgh94-jsdfg03
+            name: Bucky
+  schemas:
+    productKafkaMessage:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          description: The ID of the product.
+        type:
+          type: string
+          description: The type of the product.
+        name:
+          type: string
+          description: The name of the product.
+        event:
+          type: string
+          description: The event associated with the product.
+          enum:
+            - CREATED
+            - UPDATED
+            - DELETED

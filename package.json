@@ -1,0 +1,9 @@
+{
+  "type": "module",
+  "dependencies": {
+    "@asyncapi/parser": "^3.3.0"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1"
+  }
+}
