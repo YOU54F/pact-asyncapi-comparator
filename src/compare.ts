@@ -9,11 +9,7 @@ export const formatErrorMessage = (error: ErrorObject) =>
     : error.message;
 
 const main = async () => {
-  if (!process.argv[2] || !process.argv[3]) {
-    throw new Error("asyncapi + pactfile not provided");
-  }
-  const asyncApiLocation = process.argv[2];
-  const pactFileLocation = process.argv[3];
+  const { asyncApiLocation, pactFileLocation } = processArgs(process.argv);
   const pactFile = readFileSync(pactFileLocation, "utf8");
   const parser = new Parser();
   const asyncapiRawData = fromFile(parser, asyncApiLocation);
@@ -148,4 +144,28 @@ const main = async () => {
   }
 };
 
-main();
+export const processArgs = (args: string[]) => {
+  if (!args[2] && !args[3]) {
+    throw new Error("asyncapi + pact file not provided");
+  }
+  if (!args[2]) {
+    throw new Error("asyncapi file not provided");
+  }
+  if (!args[3]) {
+    throw new Error("pact file not provided");
+  }
+  const asyncApiLocation = args[2];
+  const pactFileLocation = args[3];
+  return {
+    asyncApiLocation,
+    pactFileLocation,
+  };
+};
+
+
+if (require.main === module) {
+  main().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
+}
