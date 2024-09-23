@@ -1,8 +1,8 @@
 v3_sns:
-	node compare.js asyncapi/api-sns.yml pacts/v3-sns.json
+	npm run e2e:v3:sns
 
 v3_kafka:
-	node compare.js asyncapi/api-sns.yml pacts/v3-kafka.json
+	npm run e2e:v3:kafka
 
 v2_http:
-	node compare.js asyncapi/api-sns.yml pacts/v2-http.json
+	npm run e2e:v2:http

@@ -1,9 +1,14 @@
 {
-  "type": "module",
   "dependencies": {
     "@asyncapi/parser": "^3.3.0"
   },
   "devDependencies": {
-    "ajv": "^8.17.1"
+    "ajv": "^8.17.1",
+    "ts-node": "^10.9.2"
+  },
+  "scripts":{
+    "e2e:v3:sns": "ts-node compare.ts asyncapi/api-sns.yml pacts/v3-sns.json",
+    "e2e:v3:kafka": "ts-node compare.ts asyncapi/api-sns.yml pacts/v3-kafka.json",
+    "e2e:v2:http": "ts-node compare.ts asyncapi/api-sns.yml pacts/v2-http.json"
   }
 }
