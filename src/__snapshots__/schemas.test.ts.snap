@@ -1,0 +1,1175 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pact v2 can be serialised 1`] = `
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "definitions": {
+    "headers": {
+      "$id": "#/definitions/headers",
+      "anyOf": [
+        {
+          "patternProperties": {
+            "^(.*)$": {
+              "type": "string",
+            },
+          },
+          "type": "object",
+        },
+        {
+          "patternProperties": {
+            "^(.*)$": {
+              "items": {
+                "type": "string",
+              },
+              "type": "array",
+            },
+          },
+          "type": "object",
+        },
+      ],
+    },
+    "interaction": {
+      "$id": "#/definitions/interaction",
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string",
+        },
+        "providerState": {
+          "type": "string",
+        },
+        "request": {
+          "$ref": "#/definitions/request",
+        },
+        "response": {
+          "$ref": "#/definitions/response",
+        },
+      },
+      "required": [
+        "description",
+        "request",
+        "response",
+      ],
+      "type": "object",
+    },
+    "interactions": {
+      "$id": "#/definitions/interactions",
+      "items": {
+        "$ref": "#/definitions/interaction",
+      },
+      "type": "array",
+    },
+    "matchRegex": {
+      "$id": "#/definitions/matchRegex",
+      "additionalProperties": false,
+      "properties": {
+        "match": {
+          "const": "regex",
+          "type": "string",
+        },
+        "regex": {
+          "type": "string",
+        },
+      },
+      "required": [
+        "match",
+        "regex",
+      ],
+      "type": "object",
+    },
+    "matchType": {
+      "$id": "#/definitions/matchType",
+      "additionalProperties": false,
+      "properties": {
+        "match": {
+          "const": "type",
+          "type": "string",
+        },
+        "max": {
+          "type": "number",
+        },
+        "min": {
+          "type": "number",
+        },
+      },
+      "required": [
+        "match",
+      ],
+      "type": "object",
+    },
+    "matchingRules": {
+      "$id": "#/definitions/matchingRules",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$.*$": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/matchRegex",
+            },
+            {
+              "$ref": "#/definitions/matchType",
+            },
+          ],
+        },
+      },
+      "type": "object",
+    },
+    "metadata": {
+      "$id": "#/definitions/metadata",
+      "properties": {
+        "pact-specification": {
+          "additionalProperties": false,
+          "properties": {
+            "version": {
+              "type": "string",
+            },
+          },
+          "required": [
+            "version",
+          ],
+          "type": "object",
+        },
+        "pactSpecification": {
+          "additionalProperties": false,
+          "properties": {
+            "version": {
+              "type": "string",
+            },
+          },
+          "required": [
+            "version",
+          ],
+          "type": "object",
+        },
+        "pactSpecificationVersion": {
+          "type": "string",
+        },
+      },
+      "type": "object",
+    },
+    "pacticipant": {
+      "$id": "#/definitions/pacticipant",
+      "properties": {
+        "name": {
+          "type": "string",
+        },
+      },
+      "required": [
+        "name",
+      ],
+      "type": "object",
+    },
+    "request": {
+      "$id": "#/definitions/request",
+      "additionalProperties": false,
+      "properties": {
+        "body": {},
+        "headers": {
+          "$ref": "#/definitions/headers",
+        },
+        "matchingRules": {
+          "$ref": "#/definitions/matchingRules",
+        },
+        "method": {
+          "enum": [
+            "connect",
+            "CONNECT",
+            "delete",
+            "DELETE",
+            "get",
+            "GET",
+            "head",
+            "HEAD",
+            "options",
+            "OPTIONS",
+            "post",
+            "POST",
+            "put",
+            "PUT",
+            "trace",
+            "TRACE",
+          ],
+          "type": "string",
+        },
+        "path": {
+          "type": "string",
+        },
+        "query": {
+          "pattern": "^$|^[^=&]+=[^=&]+&?$|^[^=&]+=[^=&]+(&[^=&]+=[^=&]+)*&?$",
+          "type": "string",
+        },
+      },
+      "required": [
+        "method",
+        "path",
+      ],
+      "type": "object",
+    },
+    "response": {
+      "$id": "#/definitions/response",
+      "additionalProperties": false,
+      "properties": {
+        "body": {},
+        "headers": {
+          "$ref": "#/definitions/headers",
+        },
+        "matchingRules": {
+          "$ref": "#/definitions/matchingRules",
+        },
+        "status": {
+          "maximum": 599,
+          "minimum": 100,
+          "type": "integer",
+        },
+      },
+      "required": [
+        "status",
+      ],
+      "type": "object",
+    },
+  },
+  "description": "Schema for a Pact file",
+  "properties": {
+    "consumer": {
+      "$ref": "#/definitions/pacticipant",
+    },
+    "interactions": {
+      "$ref": "#/definitions/interactions",
+    },
+    "metadata": {
+      "$ref": "#/definitions/metadata",
+    },
+    "provider": {
+      "$ref": "#/definitions/pacticipant",
+    },
+  },
+  "required": [
+    "consumer",
+    "interactions",
+    "provider",
+  ],
+  "title": "Pact V2",
+  "type": "object",
+}
+`;
+
+exports[`Pact v3 can be serialised 1`] = `
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "definitions": {
+    "bodyGenerator": {
+      "$id": "#/definitions/bodyGenerator",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^\\$.*$": {
+          "$ref": "#/definitions/generator",
+        },
+      },
+      "type": "object",
+    },
+    "bodyMatcher": {
+      "$id": "#/definitions/bodyMatcher",
+      "patternProperties": {
+        "^\\$.*$": {
+          "$ref": "#/definitions/matchers",
+        },
+      },
+      "type": "object",
+    },
+    "genDate": {
+      "$id": "#/definitions/genDate",
+      "additionalProperties": false,
+      "properties": {
+        "format": {
+          "type": "string",
+        },
+        "type": {
+          "const": "Date",
+          "type": "string",
+        },
+      },
+      "required": [
+        "type",
+      ],
+      "type": "object",
+    },
+    "genDateTime": {
+      "$id": "#/definitions/genDateTime",
+      "additionalProperties": false,
+      "properties": {
+        "format": {
+          "type": "string",
+        },
+        "type": {
+          "const": "DateTime",
+          "type": "string",
+        },
+      },
+      "required": [
+        "type",
+      ],
+      "type": "object",
+    },
+    "genRandomBoolean": {
+      "$id": "#/definitions/genRandomBoolean",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "RandomBoolean",
+          "type": "string",
+        },
+      },
+      "required": [
+        "type",
+      ],
+      "type": "object",
+    },
+    "genRandomDecimal": {
+      "$id": "#/definitions/genRandomDecimal",
+      "additionalProperties": false,
+      "properties": {
+        "digits": {
+          "type": "number",
+        },
+        "type": {
+          "const": "RandomDecimal",
+          "type": "string",
+        },
+      },
+      "required": [
+        "type",
+        "digits",
+      ],
+      "type": "object",
+    },
+    "genRandomHexadecimal": {
+      "$id": "#/definitions/genRandomHexadecimal",
+      "additionalProperties": false,
+      "properties": {
+        "digits": {
+          "type": "number",
+        },
+        "type": {
+          "const": "RandomHexadecimal",
+          "type": "string",
+        },
+      },
+      "required": [
+        "type",
+        "digits",
+      ],
+      "type": "object",
+    },
+    "genRandomInt": {
+      "$id": "#/definitions/genRandomInt",
+      "additionalProperties": false,
+      "properties": {
+        "max": {
+          "type": "number",
+        },
+        "min": {
+          "type": "number",
+        },
+        "type": {
+          "const": "RandomInt",
+          "type": "string",
+        },
+      },
+      "required": [
+        "type",
+        "min",
+        "max",
+      ],
+      "type": "object",
+    },
+    "genRandomString": {
+      "$id": "#/definitions/genRandomString",
+      "additionalProperties": false,
+      "properties": {
+        "size": {
+          "type": "number",
+        },
+        "type": {
+          "const": "RandomString",
+          "type": "string",
+        },
+      },
+      "required": [
+        "type",
+        "size",
+      ],
+      "type": "object",
+    },
+    "genRegex": {
+      "$id": "#/definitions/genRegex",
+      "additionalProperties": false,
+      "properties": {
+        "regex": {
+          "type": "string",
+        },
+        "type": {
+          "const": "Regex",
+          "type": "string",
+        },
+      },
+      "required": [
+        "type",
+        "regex",
+      ],
+      "type": "object",
+    },
+    "genTime": {
+      "$id": "#/definitions/genTime",
+      "additionalProperties": false,
+      "properties": {
+        "format": {
+          "type": "string",
+        },
+        "type": {
+          "const": "Time",
+          "type": "string",
+        },
+      },
+      "required": [
+        "type",
+      ],
+      "type": "object",
+    },
+    "genUuid": {
+      "$id": "#/definitions/genUuid",
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "Uuid",
+          "type": "string",
+        },
+      },
+      "required": [
+        "type",
+      ],
+      "type": "object",
+    },
+    "generator": {
+      "$id": "#/definitions/generator",
+      "oneOf": [
+        {
+          "$ref": "#/definitions/genDate",
+        },
+        {
+          "$ref": "#/definitions/genDateTime",
+        },
+        {
+          "$ref": "#/definitions/genRandomBoolean",
+        },
+        {
+          "$ref": "#/definitions/genRandomDecimal",
+        },
+        {
+          "$ref": "#/definitions/genRandomHexadecimal",
+        },
+        {
+          "$ref": "#/definitions/genRandomInt",
+        },
+        {
+          "$ref": "#/definitions/genRandomString",
+        },
+        {
+          "$ref": "#/definitions/genRegex",
+        },
+        {
+          "$ref": "#/definitions/genTime",
+        },
+        {
+          "$ref": "#/definitions/genUuid",
+        },
+      ],
+    },
+    "headers": {
+      "$id": "#/definitions/headers",
+      "anyOf": [
+        {
+          "patternProperties": {
+            "^(.*)$": {
+              "type": "string",
+            },
+          },
+          "type": "object",
+        },
+        {
+          "patternProperties": {
+            "^(.*)$": {
+              "items": {
+                "type": "string",
+              },
+              "type": "array",
+            },
+          },
+          "type": "object",
+        },
+      ],
+    },
+    "interaction": {
+      "$id": "#/definitions/interaction",
+      "additionalProperties": false,
+      "properties": {
+        "description": {
+          "type": "string",
+        },
+        "providerStates": {
+          "anyOf": [
+            {
+              "type": "string",
+            },
+            {
+              "items": {
+                "properties": {
+                  "name": {
+                    "type": "string",
+                  },
+                  "params": {
+                    "patternProperties": {
+                      "^(.*)$": {},
+                    },
+                    "type": "object",
+                  },
+                },
+                "required": [
+                  "name",
+                ],
+                "type": "object",
+              },
+              "type": "array",
+            },
+          ],
+        },
+        "request": {
+          "$ref": "#/definitions/request",
+        },
+        "response": {
+          "$ref": "#/definitions/response",
+        },
+      },
+      "required": [
+        "description",
+        "request",
+        "response",
+      ],
+      "type": "object",
+    },
+    "interactions": {
+      "$id": "#/definitions/interactions",
+      "items": {
+        "$ref": "#/definitions/interaction",
+      },
+      "type": "array",
+    },
+    "matchBoolean": {
+      "$id": "#/definitions/matchBoolean",
+      "additionalProperties": false,
+      "properties": {
+        "match": {
+          "const": "boolean",
+          "type": "string",
+        },
+      },
+      "required": [
+        "match",
+      ],
+      "type": "object",
+    },
+    "matchContentType": {
+      "$id": "#/definitions/matchContentType",
+      "additionalProperties": false,
+      "properties": {
+        "match": {
+          "const": "contentType",
+          "type": "string",
+        },
+        "value": {
+          "type": "string",
+        },
+      },
+      "required": [
+        "match",
+        "value",
+      ],
+      "type": "object",
+    },
+    "matchDate": {
+      "$id": "#/definitions/matchDate",
+      "additionalProperties": false,
+      "properties": {
+        "format": {
+          "type": "string",
+        },
+        "match": {
+          "const": "date",
+          "type": "string",
+        },
+      },
+      "required": [
+        "match",
+        "format",
+      ],
+      "type": "object",
+    },
+    "matchDatetime": {
+      "$id": "#/definitions/matchDatetime",
+      "additionalProperties": false,
+      "properties": {
+        "format": {
+          "type": "string",
+        },
+        "match": {
+          "const": "datetime",
+          "type": "string",
+        },
+      },
+      "required": [
+        "match",
+        "format",
+      ],
+      "type": "object",
+    },
+    "matchDecimal": {
+      "$id": "#/definitions/matchDecimal",
+      "additionalProperties": false,
+      "properties": {
+        "match": {
+          "const": "decimal",
+          "type": "string",
+        },
+      },
+      "required": [
+        "match",
+      ],
+      "type": "object",
+    },
+    "matchEquality": {
+      "$id": "#/definitions/matchEquality",
+      "additionalProperties": false,
+      "properties": {
+        "match": {
+          "const": "equality",
+          "type": "string",
+        },
+      },
+      "required": [
+        "match",
+      ],
+      "type": "object",
+    },
+    "matchInclude": {
+      "$id": "#/definitions/matchInclude",
+      "additionalProperties": false,
+      "properties": {
+        "match": {
+          "const": "include",
+          "type": "string",
+        },
+        "value": {
+          "type": "string",
+        },
+      },
+      "required": [
+        "match",
+        "value",
+      ],
+      "type": "object",
+    },
+    "matchInteger": {
+      "$id": "#/definitions/matchInteger",
+      "additionalProperties": false,
+      "properties": {
+        "match": {
+          "const": "integer",
+          "type": "string",
+        },
+      },
+      "required": [
+        "match",
+      ],
+      "type": "object",
+    },
+    "matchNull": {
+      "$id": "#/definitions/matchNull",
+      "additionalProperties": false,
+      "properties": {
+        "match": {
+          "const": "null",
+          "type": "string",
+        },
+      },
+      "required": [
+        "match",
+      ],
+      "type": "object",
+    },
+    "matchNumber": {
+      "$id": "#/definitions/matchNumber",
+      "additionalProperties": false,
+      "properties": {
+        "match": {
+          "const": "number",
+          "type": "string",
+        },
+      },
+      "required": [
+        "match",
+      ],
+      "type": "object",
+    },
+    "matchRegex": {
+      "$id": "#/definitions/matchRegex",
+      "additionalProperties": false,
+      "properties": {
+        "match": {
+          "const": "regex",
+          "type": "string",
+        },
+        "regex": {
+          "type": "string",
+        },
+      },
+      "required": [
+        "match",
+        "regex",
+      ],
+      "type": "object",
+    },
+    "matchTime": {
+      "$id": "#/definitions/matchTime",
+      "additionalProperties": false,
+      "properties": {
+        "format": {
+          "type": "string",
+        },
+        "match": {
+          "const": "time",
+          "type": "string",
+        },
+      },
+      "required": [
+        "match",
+        "format",
+      ],
+      "type": "object",
+    },
+    "matchType": {
+      "$id": "#/definitions/matchType",
+      "additionalProperties": false,
+      "properties": {
+        "match": {
+          "const": "type",
+          "type": "string",
+        },
+        "max": {
+          "type": "number",
+        },
+        "min": {
+          "type": "number",
+        },
+      },
+      "required": [
+        "match",
+      ],
+      "type": "object",
+    },
+    "matchValues": {
+      "$id": "#/definitions/matchValues",
+      "additionalProperties": false,
+      "properties": {
+        "match": {
+          "const": "values",
+          "type": "string",
+        },
+      },
+      "required": [
+        "match",
+      ],
+      "type": "object",
+    },
+    "matchers": {
+      "$id": "#/definitions/matchers",
+      "additionalProperties": false,
+      "properties": {
+        "combine": {
+          "anyOf": [
+            {
+              "const": "AND",
+              "type": "string",
+            },
+            {
+              "const": "OR",
+              "type": "string",
+            },
+          ],
+        },
+        "matchers": {
+          "items": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/matchRegex",
+              },
+              {
+                "$ref": "#/definitions/matchType",
+              },
+              {
+                "$ref": "#/definitions/matchBoolean",
+              },
+              {
+                "$ref": "#/definitions/matchContentType",
+              },
+              {
+                "$ref": "#/definitions/matchDate",
+              },
+              {
+                "$ref": "#/definitions/matchDatetime",
+              },
+              {
+                "$ref": "#/definitions/matchDecimal",
+              },
+              {
+                "$ref": "#/definitions/matchEquality",
+              },
+              {
+                "$ref": "#/definitions/matchInclude",
+              },
+              {
+                "$ref": "#/definitions/matchInteger",
+              },
+              {
+                "$ref": "#/definitions/matchNull",
+              },
+              {
+                "$ref": "#/definitions/matchNumber",
+              },
+              {
+                "$ref": "#/definitions/matchTime",
+              },
+              {
+                "$ref": "#/definitions/matchValues",
+              },
+            ],
+          },
+          "type": "array",
+        },
+      },
+      "required": [
+        "matchers",
+      ],
+      "type": "object",
+    },
+    "matchingRules": {
+      "$id": "#/definitions/matchingRules",
+      "additionalProperties": false,
+      "properties": {
+        "body": {
+          "$ref": "#/definitions/bodyMatcher",
+        },
+        "header": {
+          "$ref": "#/definitions/recordMatcher",
+        },
+        "path": {
+          "$ref": "#/definitions/matchers",
+        },
+        "query": {
+          "$ref": "#/definitions/recordMatcher",
+        },
+      },
+      "type": "object",
+    },
+    "message": {
+      "$id": "#/definitions/message",
+      "additionalProperties": false,
+      "properties": {
+        "contents": {},
+        "description": {
+          "type": "string",
+        },
+        "generators": {
+          "additionalProperties": false,
+          "properties": {
+            "body": {
+              "$ref": "#/definitions/bodyGenerator",
+            },
+            "metadata": {
+              "$ref": "#/definitions/recordGenerator",
+            },
+          },
+          "type": "object",
+        },
+        "matchingRules": {
+          "additionalProperties": false,
+          "properties": {
+            "body": {
+              "$ref": "#/definitions/bodyMatcher",
+            },
+          },
+          "required": [
+            "body",
+          ],
+          "type": "object",
+        },
+        "metaData": {
+          "patternProperties": {
+            "^(.*)$": {},
+          },
+          "type": "object",
+        },
+        "metadata": {
+          "patternProperties": {
+            "^(.*)$": {},
+          },
+          "type": "object",
+        },
+        "providerStates": {
+          "anyOf": [
+            {
+              "type": "string",
+            },
+            {
+              "items": {
+                "properties": {
+                  "name": {
+                    "type": "string",
+                  },
+                  "params": {
+                    "patternProperties": {
+                      "^(.*)$": {},
+                    },
+                    "type": "object",
+                  },
+                },
+                "required": [
+                  "name",
+                ],
+                "type": "object",
+              },
+              "type": "array",
+            },
+          ],
+        },
+      },
+      "required": [
+        "contents",
+        "description",
+      ],
+      "type": "object",
+    },
+    "messages": {
+      "$id": "#/definitions/messages",
+      "items": {
+        "$ref": "#/definitions/message",
+      },
+      "type": "array",
+    },
+    "metadata": {
+      "$id": "#/definitions/metadata",
+      "properties": {
+        "pact-specification": {
+          "additionalProperties": false,
+          "properties": {
+            "version": {
+              "type": "string",
+            },
+          },
+          "required": [
+            "version",
+          ],
+          "type": "object",
+        },
+        "pactSpecification": {
+          "additionalProperties": false,
+          "properties": {
+            "version": {
+              "type": "string",
+            },
+          },
+          "required": [
+            "version",
+          ],
+          "type": "object",
+        },
+        "pactSpecificationVersion": {
+          "type": "string",
+        },
+      },
+      "type": "object",
+    },
+    "pacticipant": {
+      "$id": "#/definitions/pacticipant",
+      "properties": {
+        "name": {
+          "type": "string",
+        },
+      },
+      "required": [
+        "name",
+      ],
+      "type": "object",
+    },
+    "recordGenerator": {
+      "$id": "#/definitions/recordGenerator",
+      "additionalProperties": false,
+      "patternProperties": {
+        "^(.*)$": {
+          "$ref": "#/definitions/generator",
+        },
+      },
+      "type": "object",
+    },
+    "recordMatcher": {
+      "$id": "#/definitions/recordMatcher",
+      "patternProperties": {
+        "^(.*)$": {
+          "$ref": "#/definitions/matchers",
+        },
+      },
+      "type": "object",
+    },
+    "request": {
+      "$id": "#/definitions/request",
+      "additionalProperties": false,
+      "properties": {
+        "body": {},
+        "generators": {
+          "properties": {
+            "body": {
+              "$ref": "#/definitions/bodyGenerator",
+            },
+            "headers": {
+              "$ref": "#/definitions/recordGenerator",
+            },
+            "path": {
+              "$ref": "#/definitions/recordGenerator",
+            },
+            "query": {
+              "$ref": "#/definitions/generator",
+            },
+          },
+          "type": "object",
+        },
+        "headers": {
+          "$ref": "#/definitions/headers",
+        },
+        "matchingRules": {
+          "$ref": "#/definitions/matchingRules",
+        },
+        "method": {
+          "enum": [
+            "connect",
+            "CONNECT",
+            "delete",
+            "DELETE",
+            "get",
+            "GET",
+            "head",
+            "HEAD",
+            "options",
+            "OPTIONS",
+            "post",
+            "POST",
+            "put",
+            "PUT",
+            "trace",
+            "TRACE",
+          ],
+          "type": "string",
+        },
+        "path": {
+          "type": "string",
+        },
+        "query": {
+          "anyOf": [
+            {
+              "patternProperties": {
+                "^(.*)$": {
+                  "type": "string",
+                },
+              },
+              "type": "object",
+            },
+            {
+              "patternProperties": {
+                "^(.*)$": {
+                  "items": {
+                    "type": "string",
+                  },
+                  "type": "array",
+                },
+              },
+              "type": "object",
+            },
+          ],
+        },
+      },
+      "required": [
+        "method",
+        "path",
+      ],
+      "type": "object",
+    },
+    "response": {
+      "$id": "#/definitions/response",
+      "additionalProperties": false,
+      "properties": {
+        "body": {},
+        "generators": {
+          "properties": {
+            "body": {
+              "$ref": "#/definitions/bodyGenerator",
+            },
+            "headers": {
+              "$ref": "#/definitions/recordGenerator",
+            },
+            "status": {
+              "$ref": "#/definitions/generator",
+            },
+          },
+          "type": "object",
+        },
+        "headers": {
+          "$ref": "#/definitions/headers",
+        },
+        "matchingRules": {
+          "$ref": "#/definitions/matchingRules",
+        },
+        "status": {
+          "maximum": 599,
+          "minimum": 100,
+          "type": "integer",
+        },
+      },
+      "required": [
+        "status",
+      ],
+      "type": "object",
+    },
+  },
+  "description": "Schema for a Pact file",
+  "properties": {
+    "consumer": {
+      "$ref": "#/definitions/pacticipant",
+    },
+    "interactions": {
+      "$ref": "#/definitions/interactions",
+    },
+    "messages": {
+      "$ref": "#/definitions/messages",
+    },
+    "metadata": {
+      "$ref": "#/definitions/metadata",
+    },
+    "provider": {
+      "$ref": "#/definitions/pacticipant",
+    },
+  },
+  "required": [
+    "consumer",
+    "provider",
+  ],
+  "title": "Pact V3",
+  "type": "object",
+}
+`;
