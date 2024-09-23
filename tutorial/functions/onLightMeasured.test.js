@@ -8,7 +8,8 @@ describe('test streetlights-subscriber', () => {
   it('should consume a message ', () => {
     const messagePact = new MessageConsumerPact({
       consumer: 'Streetlights-subscriber',
-      provider: 'Streetlights-publisher'
+      provider: 'Streetlights-publisher',
+      spec: 4
     });
 
     messagePact

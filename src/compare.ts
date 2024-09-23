@@ -65,7 +65,7 @@ const validateMessages = (
 
   for (const pactMessage of pactMessages) {
     const pactContents = pactMessage["contents"]
-    const pactContentType = pactMessage["metadata"]?.["contentType"] ?? pactMessage["metadata"]?.["content-type"] ?? undefined
+    const pactContentType = pactMessage["metadata"]?.["contentType"] ?? pactMessage["metadata"]?.["content-type"] ?? pactMessage["metaData"]?.["contentType"] ?? pactMessage["metaData"]?.["content-type"] ?? undefined
     if (allChannelMessages.length === 0) {
       throw new Error("No channel payloads found");
     }
