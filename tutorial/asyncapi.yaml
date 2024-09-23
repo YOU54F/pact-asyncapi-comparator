@@ -18,6 +18,7 @@ channels:
     messages:
       lightMeasuredMessage:
         name: LightMeasured
+        contentType: application/json
         payload:
           type: object
           properties:
