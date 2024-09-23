@@ -1,11 +1,11 @@
-import { readFileSync } from "node:fs";
-import { fromFile, Parser, MessageInterface } from "@asyncapi/parser";
-import Ajv, { ErrorObject } from "ajv";
-import addFormats from "ajv-formats"
-import { Result } from "./types";
+import { readFileSync } from 'node:fs';
+import { fromFile, Parser, MessageInterface } from '@asyncapi/parser';
+import Ajv, { ErrorObject } from 'ajv';
+import addFormats from 'ajv-formats';
+import { Result } from './types';
 
 export const formatErrorMessage = (error: ErrorObject) =>
-  error.keyword === "additionalProperties"
+  error.keyword === 'additionalProperties'
     ? `${error.message} - ${error.params.additionalProperty}`
     : error.message;
 
@@ -19,7 +19,7 @@ const validateAsyncApi = async (asyncApiLocation: string) => {
   }
   const asyncApiData = await asyncapiRawData.parse();
   if (!asyncApiData.document) {
-    throw new Error("Failed to parse AsyncAPI document");
+    throw new Error('Failed to parse AsyncAPI document');
   }
   return asyncApiData;
 };
@@ -29,11 +29,11 @@ const extractChannelMessages = (asyncApiData: any): MessageInterface[] => {
   for (const channel of asyncApiData.document.channels().values()) {
     for (const message of channel.messages().values()) {
       const { payload } = message.json();
-      delete payload["x-parser-schema-id"];
-      for (const key in payload["properties"]) {
-        delete payload["properties"][key]["x-parser-schema-id"];
+      delete payload['x-parser-schema-id'];
+      for (const key in payload['properties']) {
+        delete payload['properties'][key]['x-parser-schema-id'];
       }
-      payload["additionalProperties"] = false;
+      payload['additionalProperties'] = false;
       allChannelMessages.push(message);
     }
   }
@@ -43,14 +43,32 @@ const extractChannelMessages = (asyncApiData: any): MessageInterface[] => {
 const validatePactFile = (pactFile: string) => {
   const pact = JSON.parse(pactFile);
   const pactSpecificationVersion = pact.metadata.pactSpecification.version;
-  if (pactSpecificationVersion !== "3.0.0") {
+  if (
+    pactSpecificationVersion !== '3.0.0' &&
+    pactSpecificationVersion !== '4.0'
+  ) {
     throw new Error(
-      `Only Pact v3 files with messages are supported. Supplied version: ${pactSpecificationVersion}`
+      `Only Pact v3/v4 files with messages are supported. Supplied version: ${pactSpecificationVersion}`
     );
-  } else if (!pact.messages) {
-    throw new Error("Only Pact v3 files with messages are supported");
+  } else if (pactSpecificationVersion === '3.0.0') {
+    return pact.messages.map((message: any) => {
+      message.pactSpecificationVersion = pactSpecificationVersion;
+      return message;
+    });
+  } else if (pactSpecificationVersion === '4.0') {
+    return pact.interactions
+      .map((interaction: any) => {
+        interaction.pactSpecificationVersion = pactSpecificationVersion;
+        return interaction;
+      })
+      .filter((interaction: any) => {
+        return (
+          interaction.type === 'Asynchronous/Messages' ||
+          interaction.type === 'Synchronous/Messages'
+        );
+      });
   }
-  return pact.messages;
+  throw new Error(`Unable to find valid interactions`);
 };
 
 const validateMessages = (
@@ -59,15 +77,28 @@ const validateMessages = (
   pactFileLocation: string
 ) => {
   const ajv = new Ajv();
-  addFormats(ajv)
+  addFormats(ajv);
   const errors: Result[] = [];
   const warnings: Result[] = [];
 
   for (const pactMessage of pactMessages) {
-    const pactContents = pactMessage["contents"]
-    const pactContentType = pactMessage["metadata"]?.["contentType"] ?? pactMessage["metadata"]?.["content-type"] ?? pactMessage["metaData"]?.["contentType"] ?? pactMessage["metaData"]?.["content-type"] ?? undefined
+    // console.log(pactMessage);
+    // console.log(pactMessage.pactSpecificationVersion);
+    const pactContents =
+      pactMessage.pactSpecificationVersion === '4.0'
+        ? pactMessage['contents']['content']
+        : pactMessage['contents'];
+    const pactContentType =
+      pactMessage.pactSpecificationVersion === '4.0'
+        ? pactMessage['contents']?.['contentType']
+        : pactMessage['metadata']?.['contentType'] ??
+          pactMessage['metadata']?.['content-type'] ??
+          pactMessage['metaData']?.['contentType'] ??
+          pactMessage['metaData']?.['content-type'] ??
+          undefined;
+
     if (allChannelMessages.length === 0) {
-      throw new Error("No channel payloads found");
+      throw new Error('No channel payloads found');
     }
 
     for (const channelMessage of allChannelMessages) {
@@ -75,7 +106,7 @@ const validateMessages = (
         channelMessage.json().contentType === pactContentType;
       if (!contentTypeMatchResult) {
         errors.push({
-          code: "request.content-type.incompatible",
+          code: 'request.content-type.incompatible',
           message: `Content-type does not match. Expected in AsyncAPI: ${
             channelMessage.json().contentType
           }, actual in Pact: ${pactContentType}`,
@@ -84,18 +115,18 @@ const validateMessages = (
             location: channelMessage.meta().pointer,
             value: undefined,
             pathMethod: null,
-            pathName: null,
+            pathName: null
           },
           mockDetails: {
-            interactionDescription: pactMessage["description"],
+            interactionDescription: pactMessage['description'],
             interactionState:
-            pactMessage["providerState"] || pactMessage["providerStates"],
+              pactMessage['providerState'] || pactMessage['providerStates'],
             mockFile: pactFileLocation,
-            location: pactMessage["description"],
-            value: undefined,
+            location: pactMessage['description'],
+            value: undefined
           },
-          source: "spec-mock-validation",
-          type: "error",
+          source: 'spec-mock-validation',
+          type: 'error'
         });
       }
       const schemaValidationResult = ajv.validate(
@@ -105,25 +136,25 @@ const validateMessages = (
       if (!schemaValidationResult && ajv.errors) {
         ajv.errors.forEach((error) => {
           errors.push({
-            code: "request.body.incompatible",
-            message: formatErrorMessage(error) ?? "error",
+            code: 'request.body.incompatible',
+            message: formatErrorMessage(error) ?? 'error',
             specDetails: {
               specFile: channelMessage.meta().asyncapi.source,
               location: channelMessage.meta().pointer,
               value: undefined,
               pathMethod: null,
-              pathName: null,
+              pathName: null
             },
             mockDetails: {
-              interactionDescription: pactMessage["description"],
+              interactionDescription: pactMessage['description'],
               interactionState:
-              pactMessage["providerState"] || pactMessage["providerStates"],
+                pactMessage['providerState'] || pactMessage['providerStates'],
               mockFile: pactFileLocation,
-              location: pactMessage["description"],
-              value: undefined,
+              location: pactMessage['description'],
+              value: undefined
             },
-            source: "spec-mock-validation",
-            type: "error",
+            source: 'spec-mock-validation',
+            type: 'error'
           });
         });
       }
@@ -143,10 +174,10 @@ const validateMessages = (
 
 const main = async () => {
   const { asyncApiLocation, pactFileLocation } = processArgs(process.argv);
-  const pactFile = readFileSync(pactFileLocation, "utf8");
+  const pactFile = readFileSync(pactFileLocation, 'utf8');
 
   if (!pactFile) {
-    throw new Error("Failed to parse Pact document");
+    throw new Error('Failed to parse Pact document');
   }
 
   const asyncApiData = await validateAsyncApi(asyncApiLocation);
@@ -158,17 +189,17 @@ const main = async () => {
 
 export const processArgs = (args: string[]) => {
   if (!args[2] && !args[3]) {
-    throw new Error("AsyncAPI and Pact file not provided");
+    throw new Error('AsyncAPI and Pact file not provided');
   }
   if (!args[2]) {
-    throw new Error("AsyncAPI file not provided");
+    throw new Error('AsyncAPI file not provided');
   }
   if (!args[3]) {
-    throw new Error("Pact file not provided");
+    throw new Error('Pact file not provided');
   }
   return {
     asyncApiLocation: args[2],
-    pactFileLocation: args[3],
+    pactFileLocation: args[3]
   };
 };
 

@@ -1,0 +1,36 @@
+{
+  "consumer": {
+    "name": "Streetlights-subscriber-v4"
+  },
+  "interactions": [
+    {
+      "contents": {
+        "content": {
+          "id": 1,
+          "lumens": 3,
+          "sentAt": "2017-06-07T12:34:32.000Z"
+        },
+        "contentType": "application/json",
+        "encoded": false
+      },
+      "description": "a message",
+      "pending": false,
+      "type": "Asynchronous/Messages"
+    }
+  ],
+  "metadata": {
+    "pact-js": {
+      "version": "13.1.3"
+    },
+    "pactRust": {
+      "ffi": "0.4.22",
+      "models": "1.2.3"
+    },
+    "pactSpecification": {
+      "version": "4.0"
+    }
+  },
+  "provider": {
+    "name": "Streetlights-publisher"
+  }
+}

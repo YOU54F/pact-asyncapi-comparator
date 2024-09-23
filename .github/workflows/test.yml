@@ -20,3 +20,11 @@ jobs:
         run: make v3_kafka || echo "expected failure"
       - name: Run v3_sns
         run: make v3_sns
+      - name: tutorial_install
+        run: make tutorial_install
+      - name: tutorial_test_pact
+        run: make tutorial_test_pact
+      - name: tutorial_test_compare_v3
+        run: make tutorial_test_compare_v3
+      - name: tutorial_test_compare_v4
+        run: make tutorial_test_compare_v4

@@ -14,8 +14,14 @@ tutorial_send_message:
 tutorial_run:
 	cd tutorial && npm run dev
 
+tutorial_install:
+	cd tutorial && npm install
+
 tutorial_test_pact:
 	cd tutorial && npm run test
 
-tutorial_test_compare:
-	npx ts-node src/compare.ts tutorial/asyncapi.yaml tutorial/pacts/Streetlights-subscriber-Streetlights-publisher.json
+tutorial_test_compare_v3:
+	npx ts-node src/compare.ts tutorial/asyncapi.yaml tutorial/pacts/Streetlights-subscriber-v3-Streetlights-publisher.json
+
+tutorial_test_compare_v4:
+	npx ts-node src/compare.ts tutorial/asyncapi.yaml tutorial/pacts/Streetlights-subscriber-v4-Streetlights-publisher.json

@@ -25,7 +25,7 @@ describe.each([
 //   { schema: PactV1Schema, version: "v1" },
   { schema: PactV2Schema, version: "v2" },
   { schema: PactV3Schema, version: "v3" },
-  // { schema: PactV4Schema, version: "v4" },
+  { schema: PactV4Schema, version: "v4" },
 ])("Pact", ({ schema, version }) => {
   describe(version, () => {
     let validate: ValidateFunction;

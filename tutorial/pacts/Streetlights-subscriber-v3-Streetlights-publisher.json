@@ -1,21 +1,18 @@
 {
   "consumer": {
-    "name": "Streetlights-subscriber"
+    "name": "Streetlights-subscriber-v3"
   },
-  "interactions": [
+  "messages": [
     {
       "contents": {
-        "content": {
-          "id": 1,
-          "lumens": 3,
-          "sentAt": "2017-06-07T12:34:32.000Z"
-        },
-        "contentType": "application/json",
-        "encoded": false
+        "id": 1,
+        "lumens": 3,
+        "sentAt": "2017-06-07T12:34:32.000Z"
       },
       "description": "a message",
-      "pending": false,
-      "type": "Asynchronous/Messages"
+      "metadata": {
+        "contentType": "application/json"
+      }
     }
   ],
   "metadata": {
@@ -27,7 +24,7 @@
       "models": "1.2.3"
     },
     "pactSpecification": {
-      "version": "4.0"
+      "version": "3.0.0"
     }
   },
   "provider": {
