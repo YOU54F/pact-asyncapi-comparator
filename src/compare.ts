@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { fromFile, Parser, MessageInterface } from "@asyncapi/parser";
 import Ajv, { ErrorObject } from "ajv";
+import addFormats from "ajv-formats"
 import { Result } from "./types";
 
 export const formatErrorMessage = (error: ErrorObject) =>
@@ -58,15 +59,13 @@ const validateMessages = (
   pactFileLocation: string
 ) => {
   const ajv = new Ajv();
+  addFormats(ajv)
   const errors: Result[] = [];
   const warnings: Result[] = [];
 
   for (const pactMessage of pactMessages) {
-    const {
-      contents: pactContents,
-      metaData: { "content-type": pactContentType },
-    } = pactMessage;
-
+    const pactContents = pactMessage["contents"]
+    const pactContentType = pactMessage["metadata"]?.["contentType"] ?? pactMessage["metadata"]?.["content-type"] ?? undefined
     if (allChannelMessages.length === 0) {
       throw new Error("No channel payloads found");
     }
@@ -80,6 +79,21 @@ const validateMessages = (
           message: `Content-type does not match. Expected in AsyncAPI: ${
             channelMessage.json().contentType
           }, actual in Pact: ${pactContentType}`,
+          specDetails: {
+            specFile: channelMessage.meta().asyncapi.source,
+            location: channelMessage.meta().pointer,
+            value: undefined,
+            pathMethod: null,
+            pathName: null,
+          },
+          mockDetails: {
+            interactionDescription: pactMessage["description"],
+            interactionState:
+            pactMessage["providerState"] || pactMessage["providerStates"],
+            mockFile: pactFileLocation,
+            location: pactMessage["description"],
+            value: undefined,
+          },
           source: "spec-mock-validation",
           type: "error",
         });
