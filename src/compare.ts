@@ -187,19 +187,20 @@ const main = async () => {
   validateMessages(pactMessages, allChannelMessages, pactFileLocation);
 };
 
+const USAGE_STRING = "\nUsage: program <AsyncAPI File> <Pact File>"
 export const processArgs = (args: string[]) => {
   if (!args[2] && !args[3]) {
-    throw new Error('AsyncAPI and Pact file not provided');
-  }
-  if (!args[2]) {
-    throw new Error('AsyncAPI file not provided');
+    throw new Error(`Pact file and AsyncAPI file not provided${USAGE_STRING}`);
   }
   if (!args[3]) {
-    throw new Error('Pact file not provided');
+    throw new Error(`AsyncAPI file not provided${USAGE_STRING}`);
+  }
+  if (!args[2]) {
+    throw new Error(`Pact file not provided${USAGE_STRING}`);
   }
   return {
-    asyncApiLocation: args[2],
-    pactFileLocation: args[3]
+    asyncApiLocation: args[3],
+    pactFileLocation: args[2],
   };
 };
 
