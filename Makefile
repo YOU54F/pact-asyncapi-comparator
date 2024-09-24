@@ -21,7 +21,7 @@ tutorial_test_pact:
 	cd tutorial && npm run test
 
 tutorial_test_compare_v3:
-	npx ts-node src/compare.ts tutorial/asyncapi.yaml tutorial/pacts/Streetlights-subscriber-v3-Streetlights-publisher.json
+	npx ts-node src/compare.ts tutorial/pacts/Streetlights-subscriber-v3-Streetlights-publisher.json tutorial/asyncapi.yaml 
 
 tutorial_test_compare_v4:
-	npx ts-node src/compare.ts tutorial/asyncapi.yaml tutorial/pacts/Streetlights-subscriber-v4-Streetlights-publisher.json
+	npx ts-node src/compare.ts tutorial/pacts/Streetlights-subscriber-v4-Streetlights-publisher.json tutorial/asyncapi.yaml
