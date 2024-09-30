@@ -7,7 +7,7 @@ For an OpenAPI flavoured version, please see https://github.com/pactflow/swagger
 ## Usage
 
 ```
-npx --package=pact-asyncapi-comparator -c '<Pact File Location> <AsyncAPI File Location>'
+npx pact-asyncapi-comparator <Pact File Location> <AsyncAPI File Location>'
 ```
 
 ## Supported Contract Types
