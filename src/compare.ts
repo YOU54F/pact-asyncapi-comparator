@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { readFileSync } from 'node:fs';
 import { fromFile, Parser, MessageInterface } from '@asyncapi/parser';
 import Ajv, { ErrorObject } from 'ajv';

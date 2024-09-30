@@ -1,16 +1,15 @@
 {
   "name": "pact-asyncapi-comparator",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "author": {
     "name": "Yousaf Nabi",
     "email": "you@saf.dev"
   },
   "repository": {
-    "url": "git@github.com:YOU54F/pact-asyncapi-comparator.git"
+    "url": "git+ssh://git@github.com/YOU54F/pact-asyncapi-comparator.git"
   },
-  "bin": {
-    "pact-asyncapi-comparator": "dist/compare.js"
-  },
+  "bin": "dist/src/compare.js"
+,
   "dependencies": {
     "@asyncapi/parser": "^3.3.0"
   },
@@ -25,7 +24,7 @@
     "build": "tsc --outDir dist",
     "test": "jest src/*",
     "e2e:v3:sns": "ts-node src/compare.ts pacts/v3-sns.json asyncapi/api-sns.yml",
-    "e2e:v3:kafka": "ts-node src/compare.ts pacts/v3-kafka.json asyncapi/api-sns.yml",
+    "e2e:v3:kafka": "ts-node src/compare.ts pacts/v3-kafka.json asyncapi/api-kafka.yml",
     "e2e:v2:http": "ts-node src/compare.ts pacts/v2-http.json asyncapi/api-sns.yml"
   }
 }
