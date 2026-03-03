@@ -3,6 +3,8 @@ v3_sns:
 
 v3_kafka:
 	npm run e2e:v3:kafka
+v4_kafka_async:
+	npm run e2e:v4:kafka:async
 
 v2_http:
 	npm run e2e:v2:http
