@@ -2,7 +2,7 @@
 
 > A WIP comparator CLI tool, used to determine if Message-Pact interactions, are a valid subset of a given AsyncAPI document.
 
-For an OpenAPI flavoured version, please see https://github.com/pactflow/swagger-mock-validator
+For an OpenAPI flavoured version, please see <https://github.com/pactflow/openapi-pact-comparator/>
 
 ## Usage
 
