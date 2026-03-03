@@ -22,7 +22,7 @@
   },
   "scripts": {
     "build": "tsc --outDir dist",
-    "test": "jest src/*",
+    "test": "jest ./src/*",
     "e2e:v3:sns": "ts-node src/compare.ts pacts/v3-sns.json asyncapi/api-sns.yml",
     "e2e:v3:kafka": "ts-node src/compare.ts pacts/v3-kafka.json asyncapi/api-kafka.yml",
     "e2e:v4:kafka:async": "ts-node src/compare.ts pacts/v4-kafka-async.json asyncapi/streetlights.yml",
