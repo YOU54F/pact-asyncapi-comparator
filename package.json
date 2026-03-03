@@ -8,8 +8,9 @@
   "repository": {
     "url": "git+ssh://git@github.com/YOU54F/pact-asyncapi-comparator.git"
   },
-  "bin": "dist/src/compare.js"
-,
+  "bin": {
+    "pact-asyncapi-comparator": "dist/src/compare.js"
+  },
   "dependencies": {
     "@asyncapi/parser": "^3.6.0"
   },
