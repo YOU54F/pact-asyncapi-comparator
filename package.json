@@ -11,7 +11,7 @@
   "bin": "dist/src/compare.js"
 ,
   "dependencies": {
-    "@asyncapi/parser": "^3.3.0"
+    "@asyncapi/parser": "^3.6.0"
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",

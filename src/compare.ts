@@ -11,7 +11,14 @@ export const formatErrorMessage = (error: ErrorObject) =>
     : error.message;
 
 const validateAsyncApi = async (asyncApiLocation: string) => {
-  const parser = new Parser();
+  const parser = new Parser({
+    ruleset: {
+      extends: [],
+      rules: {
+        "asyncapi-latest-version": "off"
+      },
+    },
+  });
   const asyncapiRawData = fromFile(parser, asyncApiLocation);
   const results = await asyncapiRawData.validate();
   if (results.length !== 0) {
